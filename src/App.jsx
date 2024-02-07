@@ -8,8 +8,7 @@ function App() {
 
   return (
     <>
-    <Header></Header>
-    <h1>Poke API</h1>
+      <Header></Header>
     </>
   )
 }
