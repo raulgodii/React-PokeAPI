@@ -188,10 +188,11 @@
   .search {
     display: inline-block;
     position: relative;
+    width: 70%;
   }
   
   .search input[type="text"] {
-    width: autos;
+    width: 100%;
     padding: 10px;
     border: none;
     border-radius: 20px;
