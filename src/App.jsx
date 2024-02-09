@@ -4,6 +4,7 @@ import './App.css'
 import Header from './components/header'
 import Home from './components/Home'
 import Pokemons from './components/Pokemons'
+import Login from './components/Login'
 import Footer from './components/Footer'
 
 import {
@@ -29,6 +30,17 @@ const router = createBrowserRouter([
       <>
         <Header></Header>
         <Pokemons></Pokemons>
+        <Footer></Footer>
+      </>
+    ),
+    errorElement: <h1>Ruta no valida</h1>
+  },
+  {
+    path: "login",
+    element: (
+      <>
+        <Header></Header>
+        <Login></Login>
         <Footer></Footer>
       </>
     ),

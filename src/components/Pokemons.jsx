@@ -17,7 +17,7 @@ function Pokemons() {
     }
 
     useEffect(() => {
-        fetch("https://pokeapi.co/api/v2/pokemon/?offset=2&limit=2")
+        fetch("https://pokeapi.co/api/v2/pokemon/?offset=8&limit=8")
             .then((response) => response.json())
             .then((datosPokemons) => {
                 console.log(datosPokemons)

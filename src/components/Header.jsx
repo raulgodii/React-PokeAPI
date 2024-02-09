@@ -19,7 +19,7 @@ function Header() {
                                 <ul className="nav">
                                     <li><Link to="/">Home</Link></li>
                                     <li><Link to="/pokemons">Pokemons</Link></li>
-                                    <li><Link to=""><a>Sign In</a></Link></li>
+                                    <li><Link to="/login"><a>Sign In</a></Link></li>
                                 </ul>
                                 <a className='menu-trigger'>
                                     <span>Menu</span>
