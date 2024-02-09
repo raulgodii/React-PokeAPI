@@ -1,12 +1,15 @@
 import { useEffect, useState } from "react";
 
-let url = "";
+let url = "https://pokeapi.co/api/v2/pokemon/?offset=8&limit=8";
 
 function Pokemons() {
     const [pokemons, setPokemons] = useState([]);
 
+    useEffect(() => {
+        peticion();
+    }, []);
 
-    function cargarMas() {
+    function peticion() {
         fetch(url)
             .then((response) => response.json())
             .then((datosPokemons) => {
@@ -15,16 +18,6 @@ function Pokemons() {
                 url = datosPokemons.next;
             });
     }
-
-    useEffect(() => {
-        fetch("https://pokeapi.co/api/v2/pokemon/?offset=8&limit=8")
-            .then((response) => response.json())
-            .then((datosPokemons) => {
-                console.log(datosPokemons)
-                url = datosPokemons.next;
-                setPokemons([...pokemons, ...datosPokemons.results])
-            });
-    }, []);
 
     let pokemonsMaquetados = pokemons.map(pokemon =>
 
@@ -70,9 +63,9 @@ function Pokemons() {
                     </div>
                     <div className="row">
                         <div className="col-lg-12">
-                            <ul class="trending-filter">
+                            <ul className="trending-filter">
                                 <li>
-                                    <a onClick={cargarMas} class="pointer">Show more</a>
+                                    <a onClick={peticion} className="pointer">Show more</a>
                                 </li>
                             </ul>
                         </div>
