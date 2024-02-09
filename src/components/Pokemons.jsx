@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 let url = "https://pokeapi.co/api/v2/pokemon/?offset=8&limit=8";
 
@@ -13,9 +14,23 @@ function Pokemons() {
         fetch(url)
             .then((response) => response.json())
             .then((datosPokemons) => {
-                console.log(datosPokemons)
-                setPokemons([...pokemons, ...datosPokemons.results])
-                url = datosPokemons.next;
+                const pokemonPromises = datosPokemons.results.map(pokemon => {
+                    return fetch(pokemon.url)
+                        .then((response) => response.json())
+                        .then((datosPokemon) => {
+                            console.log(datosPokemon)
+                            return {
+                                ...datosPokemon
+                            };
+                        });
+                });
+    
+                Promise.all(pokemonPromises)
+                    .then(pokemonsData => {
+                        console.log(pokemonsData)
+                        setPokemons(prevPokemons => [...prevPokemons, ...pokemonsData]);
+                        url = datosPokemons.next;
+                    });
             });
     }
 
@@ -24,13 +39,13 @@ function Pokemons() {
         <div key={pokemon.name} className="col-lg-3 col-md-6 align-self-center mb-30 trending-items col-md-6 adv">
             <div className="item">
                 <div className="thumb">
-                    <a href="product-details.html"><img src="" alt="" /></a>
-                    <span className="price"><em>$36</em>$24</span>
+                    <Link to={"/detail/" + pokemon.id}><img src={pokemon.sprites.front_default} alt="" /></Link>
+                    <span className="price">{pokemon.id}</span>
                 </div>
                 <div className="down-content">
-                    <span className="category">Action</span>
-                    <h4>{pokemon.name}</h4>
-                    <a href="product-details.html"><i className="fa fa-shopping-bag"></i></a>
+                    <span className="category">{pokemon.types[0].type.name}</span>
+                    <h4 style={{ textTransform: 'uppercase' }}>{pokemon.name}</h4>
+                    <Link to={"/detail/" + pokemon.id}><i className="fa-solid fa-plus"></i></Link>
                 </div>
             </div>
         </div>
