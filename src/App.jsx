@@ -4,6 +4,7 @@ import Header from './components/header'
 import Home from './components/Home'
 import Pokemons from './components/Pokemons'
 import Login from './components/Login'
+import Register from './components/Register'
 import Detail from './components/Detail'
 import Footer from './components/Footer'
 
@@ -52,6 +53,17 @@ const router = createBrowserRouter([
       <>
         <Header></Header>
         <Detail></Detail>
+        <Footer></Footer>
+      </>
+    ),
+    errorElement: <h1>Ruta no valida</h1>
+  },
+  {
+    path: "register",
+    element: (
+      <>
+        <Header></Header>
+        <Register></Register>
         <Footer></Footer>
       </>
     ),
