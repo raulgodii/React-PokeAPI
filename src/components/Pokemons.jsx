@@ -6,10 +6,10 @@ function Pokemons() {
     const [pokemons, setPokemons] = useState([]);
 
     useEffect(() => {
-        peticion();
+        cargarPokemons();
     }, []);
 
-    function peticion() {
+    function cargarPokemons() {
         fetch(url)
             .then((response) => response.json())
             .then((datosPokemons) => {
@@ -24,7 +24,7 @@ function Pokemons() {
         <div key={pokemon.name} className="col-lg-3 col-md-6 align-self-center mb-30 trending-items col-md-6 adv">
             <div className="item">
                 <div className="thumb">
-                    <a href="product-details.html"><img src="assets/images/trending-01.jpg" alt="" /></a>
+                    <a href="product-details.html"><img src="" alt="" /></a>
                     <span className="price"><em>$36</em>$24</span>
                 </div>
                 <div className="down-content">
@@ -65,7 +65,7 @@ function Pokemons() {
                         <div className="col-lg-12">
                             <ul className="trending-filter">
                                 <li>
-                                    <a onClick={peticion} className="pointer">Show more</a>
+                                    <a onClick={cargarPokemons} className="pointer">Show more</a>
                                 </li>
                             </ul>
                         </div>
