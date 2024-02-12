@@ -13,7 +13,7 @@ function Detail() {
             .then((response) => response.json())
             .then((pokemon) => {
                 console.log(pokemon)
-                setPokemonMaquetado (
+                setPokemonMaquetado(
 
                     <div className="single-product section">
                         <div className="container">
@@ -30,6 +30,10 @@ function Detail() {
                                     <form id="qty" action="#">
                                         <input type="qty" className="form-control" id="1" aria-describedby="quantity" placeholder="1" />
                                         <button type="submit"><i className="fa fa-shopping-bag"></i> ADD TO CART</button>
+                                        <audio id="audioPlayer" autoPlay>
+                                            <source src={pokemon.cries.latest} type="audio/mpeg"/>
+                                                Tu navegador no soporta la etiqueta de audio.
+                                        </audio>
                                     </form>
                                     <ul>
                                         <li><span>Game ID:</span> COD MMII</li>
