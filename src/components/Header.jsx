@@ -19,6 +19,8 @@ function Header() {
                 setNav(<ul className="nav">
                     <li><Link to="/">Home</Link></li>
                     <li><Link to="/pokemons">Pokemons</Link></li>
+                    <li><Link to="/game">Game</Link></li>
+                    <li><i class="fa-solid fa-user"></i>&nbsp;&nbsp;{user.displayName}</li>
                     <li><Link onClick={logout}>Log Out</Link></li>
                 </ul>)
                 // ...
@@ -26,6 +28,7 @@ function Header() {
                 setNav(<ul className="nav">
                     <li><Link to="/">Home</Link></li>
                     <li><Link to="/pokemons">Pokemons</Link></li>
+                    <li><Link to="/game">Game</Link></li>
                     <li><Link to="/login">Sign In</Link></li>
                 </ul>)
                 // ...

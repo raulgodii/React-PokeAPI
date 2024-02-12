@@ -6,6 +6,8 @@ import Pokemons from './components/Pokemons'
 import Login from './components/Login'
 import Register from './components/Register'
 import Detail from './components/Detail'
+import Game from './components/Game'
+import Error from './components/Error'
 import Footer from './components/Footer'
 
 import {
@@ -23,7 +25,11 @@ const router = createBrowserRouter([
         <Footer></Footer>
       </>
     ),
-    errorElement: <h1>Ruta no valida</h1>
+    errorElement: <>
+      <Header></Header>
+        <Error></Error>
+        <Footer></Footer>
+    </>
   },
   {
     path: "pokemons",
@@ -34,7 +40,6 @@ const router = createBrowserRouter([
         <Footer></Footer>
       </>
     ),
-    errorElement: <h1>Ruta no valida</h1>
   },
   {
     path: "login",
@@ -45,7 +50,6 @@ const router = createBrowserRouter([
         <Footer></Footer>
       </>
     ),
-    errorElement: <h1>Ruta no valida</h1>
   },
   {
     path: "detail/:id",
@@ -56,7 +60,6 @@ const router = createBrowserRouter([
         <Footer></Footer>
       </>
     ),
-    errorElement: <h1>Ruta no valida</h1>
   },
   {
     path: "register",
@@ -67,7 +70,16 @@ const router = createBrowserRouter([
         <Footer></Footer>
       </>
     ),
-    errorElement: <h1>Ruta no valida</h1>
+  },
+  {
+    path: "game",
+    element: (
+      <>
+        <Header></Header>
+        <Game></Game>
+        <Footer></Footer>
+      </>
+    ),
   },
 ]);
 
