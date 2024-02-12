@@ -85,7 +85,7 @@ function Register() {
                                     <h6>Register</h6>
                                     <h2>Welcome!</h2>
                                 </div>
-                                Welcome to our Register page! Sign in to access your account and unlock a world of possibilities. Your journey starts here.
+                                Welcome to our registration page! Begin your journey by creating an account and accessing a world of opportunities. Your adventure starts right here.
                                 <br /><br />
                                 <ul>
                                     <li><span>Already have an account? <Link to={"/login"}>Click here</Link></span></li>
@@ -103,7 +103,7 @@ function Register() {
                                             <div class="row">
                                                 <div class="col-lg-12">
                                                     <fieldset>
-                                                        <h2>Please identify</h2><br /><br />
+                                                        <h2>Please register</h2><br /><br />
                                                         <input type="email" name="email" id="email" value={email} onChange={(e) => setEmail(e.target.value)} pattern="[^ @]*@[^ @]*" placeholder="Your E-mail..." required="" />
                                                     </fieldset>
                                                 </div>

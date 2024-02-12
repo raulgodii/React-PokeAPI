@@ -89,7 +89,7 @@ function Login() {
                             <div class="left-text">
                                 <div class="section-heading">
                                     <h6>Log In</h6>
-                                    <h2>Welcome!</h2>
+                                    <h2>Welcome back!</h2>
                                 </div>
                                 Welcome to our login page! Sign in to access your account and unlock a world of possibilities. Your journey starts here.
                                 <br /><br />
