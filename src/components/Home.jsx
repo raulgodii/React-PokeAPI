@@ -14,7 +14,7 @@ function Home() {
                                 <p>Explore the captivating world of Pokemon with our comprehensive online platform.</p>
                                 <div className="search-input">
                                     <form id="search" action="#">
-                                        <input type="text" placeholder="Search Pokemons" id='searchText' name="searchKeyword" onkeypress="handle" />
+                                        <input type="text" placeholder="Search Pokemons" id='searchText' name="searchKeyword" />
                                         <button role="button">Search Now</button>
                                     </form>
                                 </div>

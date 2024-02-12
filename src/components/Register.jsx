@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase";
 import { useState } from "react";
@@ -6,31 +6,53 @@ import { useState } from "react";
 function Register() {
 
     const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+    const [pass1, setPassword1] = useState('');
+    const [pass2, setPassword2] = useState('');
     const [error, setError] = useState('');
+    const navigate = useNavigate();
 
-    function signInGoogle() {
-        createUserWithEmailAndPassword(auth, email, password)
+    function register() {
+        // Validate empty fields
+        if (!email || !pass1 || !pass2) {
+            setError("All fields are mandatory");
+            return;
+        }
+
+        // Validate email format
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+            setError("Enter a valid email");
+            return;
+        }
+
+        // Validate matching passwords
+        if (pass1 !== pass2) {
+            setError("Passwords do not match");
+            return;
+        }
+        createUserWithEmailAndPassword(auth, email, pass1)
             .then((userCredential) => {
                 // Signed up 
                 const user = userCredential.user;
+                console.log("Usuario registrado: " + user)
+                navigate("/");
                 // ...
             })
             .catch((error) => {
                 switch (error.code) {
                     case 'auth/email-already-in-use':
-                      setError("Email is already registered");
-                      break;
+                        setError("Email is already registered");
+                        break;
                     case 'auth/invalid-email':
-                      setError("Invalid email");
-                      break;
+                        setError("Invalid email");
+                        break;
                     case 'auth/weak-password':
-                      setError("Weak password, it must be at least 6 characters");
-                      break;
+                        setError("Weak password, it must be at least 6 characters");
+                        break;
                     default:
-                      setError("Error while registering the user");
-                      console.error("Authentication error:", error);
-                  }
+                        setError("Error while registering the user");
+                        console.error("Authentication error:", error);
+                }
             });
 
     }
@@ -87,13 +109,18 @@ function Register() {
                                                 </div>
                                                 <div class="col-lg-12">
                                                     <fieldset>
-                                                        <input type="password" name="subject" value={password} onChange={(e) => setPassword(e.target.value)} id="subject" placeholder="Password..." autocomplete="on" />
+                                                        <input type="password" name="subject" value={pass1} onChange={(e) => setPassword1(e.target.value)} id="subject" placeholder="Password..." autocomplete="on" />
+                                                    </fieldset>
+                                                </div>
+                                                <div class="col-lg-12">
+                                                    <fieldset>
+                                                        <input type="password" name="subject" value={pass2} onChange={(e) => setPassword2(e.target.value)} id="subject" placeholder="Repeat password..." autocomplete="on" />
                                                         <p style={{ color: 'red' }}>&nbsp;&nbsp;&nbsp;&nbsp;{error}</p>
                                                     </fieldset>
                                                 </div>
                                                 <div class="col-lg-12">
                                                     <fieldset>
-                                                        <button onClick={signInGoogle} class="orange-button">Sign up</button>
+                                                        <button onClick={register} class="orange-button">Sign up</button>
                                                     </fieldset>
                                                 </div>
 

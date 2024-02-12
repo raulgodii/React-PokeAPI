@@ -24,7 +24,7 @@ function Pokemons() {
                             };
                         });
                 });
-    
+
                 Promise.all(pokemonPromises)
                     .then(pokemonsData => {
                         console.log(pokemonsData)
@@ -39,7 +39,7 @@ function Pokemons() {
         <div key={pokemon.name} className="col-lg-3 col-md-6 align-self-center mb-30 trending-items col-md-6 adv">
             <div className="item">
                 <div className="thumb">
-                    <Link to={"/detail/" + pokemon.id}><img src={pokemon.sprites.front_default} alt="" /></Link>
+                    <Link to={"/detail/" + pokemon.id}><img src={pokemon.sprites.other['official-artwork'].front_default} alt="" /></Link>
                     <span className="price">{pokemon.id}</span>
                 </div>
                 <div className="down-content">

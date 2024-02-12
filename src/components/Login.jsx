@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { signInWithPopup, GoogleAuthProvider, signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase";
 import { useState } from "react";
@@ -6,6 +6,7 @@ import { useState } from "react";
 function Login() {
 
     const provider = new GoogleAuthProvider();
+    const navigate = useNavigate();
 
     function loginGoogle() {
         signInWithPopup(auth, provider)
@@ -16,7 +17,7 @@ function Login() {
                 // The signed-in user info.
                 const user = result.user;
                 // IdP data available using getAdditionalUserInfo(result)
-                // ...
+                navigate("/");
             }).catch((error) => {
                 // Handle Errors here.
                 const errorCode = error.code;
@@ -38,7 +39,7 @@ function Login() {
             .then((userCredential) => {
                 // Signed in 
                 const user = userCredential.user;
-                // ...
+                navigate("/");
             })
             .catch((error) => {
 

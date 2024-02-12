@@ -15,21 +15,21 @@ function Detail() {
                 console.log(pokemon)
                 setPokemonMaquetado (
 
-                    <div class="single-product section">
-                        <div class="container">
-                            <div class="row">
-                                <div class="col-lg-6">
-                                    <div class="left-image">
-                                        <img src={pokemon.sprites.front_default} alt="" />
+                    <div className="single-product section">
+                        <div className="container">
+                            <div className="row">
+                                <div className="col-lg-6">
+                                    <div className="left-image">
+                                        <img src={pokemon.sprites.other['official-artwork'].front_default} alt="" />
                                     </div>
                                 </div>
-                                <div class="col-lg-6 align-self-center">
+                                <div className="col-lg-6 align-self-center">
                                     <h4 style={{ textTransform: 'uppercase' }}>{pokemon.name}</h4>
-                                    <span class="price">{pokemon.id}</span>
+                                    <span className="price">{pokemon.id}</span>
                                     <p>LUGX Gaming Template is based on the latest Bootstrap 5 CSS framework. This template is provided by TemplateMo and it is suitable for your gaming shop ecommerce websites. Feel free to use this for any purpose. Thank you.</p>
                                     <form id="qty" action="#">
-                                        <input type="qty" class="form-control" id="1" aria-describedby="quantity" placeholder="1" />
-                                        <button type="submit"><i class="fa fa-shopping-bag"></i> ADD TO CART</button>
+                                        <input type="qty" className="form-control" id="1" aria-describedby="quantity" placeholder="1" />
+                                        <button type="submit"><i className="fa fa-shopping-bag"></i> ADD TO CART</button>
                                     </form>
                                     <ul>
                                         <li><span>Game ID:</span> COD MMII</li>
@@ -37,8 +37,8 @@ function Detail() {
                                         <li><span>Multi-tags:</span> <a href="#">War</a>, <a href="#">Battle</a>, <a href="#">Royal</a></li>
                                     </ul>
                                 </div>
-                                <div class="col-lg-12">
-                                    <div class="sep"></div>
+                                <div className="col-lg-12">
+                                    <div className="sep"></div>
                                 </div>
                             </div>
                         </div>
