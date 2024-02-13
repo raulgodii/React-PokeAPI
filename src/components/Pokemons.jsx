@@ -5,12 +5,26 @@ let url = "https://pokeapi.co/api/v2/pokemon/?offset=8&limit=8";
 
 function Pokemons() {
     const [pokemons, setPokemons] = useState([]);
+    const [preload, setPreload] = useState();
 
     useEffect(() => {
         cargarPokemons();
     }, []);
 
     function cargarPokemons() {
+        setPreload(
+            <div id="js-preloader" class="js-preloader">
+                <div class="preloader-inner">
+                    <span class="dot"></span>
+                    <div class="dots">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                </div>
+            </div>
+        );
+        
         fetch(url)
             .then((response) => response.json())
             .then((datosPokemons) => {
@@ -27,6 +41,9 @@ function Pokemons() {
 
                 Promise.all(pokemonPromises)
                     .then(pokemonsData => {
+                        setPreload(
+                            <></>
+                        );
                         console.log(pokemonsData)
                         setPokemons(prevPokemons => [...prevPokemons, ...pokemonsData]);
                         url = datosPokemons.next;
@@ -75,6 +92,7 @@ function Pokemons() {
                     </ul>
                     <div className="row trending-box">
                         {pokemonsMaquetados}
+                        {preload}
                     </div>
                     <div className="row">
                         <div className="col-lg-12">

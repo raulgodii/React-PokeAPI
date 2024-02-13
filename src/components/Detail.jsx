@@ -7,8 +7,21 @@ function Detail() {
     let { id } = useParams();
 
     let [pokemonMaquetado, setPokemonMaquetado] = useState();
+    const [preload, setPreload] = useState();
 
     useEffect(() => {
+        setPreload(
+            <div id="js-preloader" class="js-preloader">
+                <div class="preloader-inner">
+                    <span class="dot"></span>
+                    <div class="dots">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                </div>
+            </div>
+        );
         fetch("https://pokeapi.co/api/v2/pokemon/" + id + "/")
             .then((response) => response.json())
             .then((pokemon) => {
@@ -28,9 +41,9 @@ function Detail() {
                                     <span className="price">{pokemon.id}</span>
                                     <p>LUGX Gaming Template is based on the latest Bootstrap 5 CSS framework. This template is provided by TemplateMo and it is suitable for your gaming shop ecommerce websites. Feel free to use this for any purpose. Thank you.</p>
                                     <audio id="audioPlayer" autoPlay>
-                                            <source src={pokemon.cries.latest} type="audio/mpeg"/>
-                                                Tu navegador no soporta la etiqueta de audio.
-                                        </audio>
+                                        <source src={pokemon.cries.latest} type="audio/mpeg" />
+                                        Tu navegador no soporta la etiqueta de audio.
+                                    </audio>
                                     <ul>
                                         <li><span>Game ID:</span> COD MMII</li>
                                         <li><span>Genre:</span> <a href="#">Action</a>, <a href="#">Team</a>, <a href="#">Single</a></li>
@@ -43,8 +56,11 @@ function Detail() {
                             </div>
                         </div>
                     </div>
-
                 )
+
+                setPreload(
+                    <></>
+                );
             });
     }, []);
 
@@ -63,6 +79,7 @@ function Detail() {
             </div>
 
             {pokemonMaquetado}
+            {preload}
         </>
     )
 }
