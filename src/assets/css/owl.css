@@ -449,7 +449,6 @@
 
 .imgShowdown {
   filter: brightness(0);
-  height: 400px;
 }
 
 .btnGreen{
@@ -457,7 +456,25 @@
   box-shadow: 0 0 25px rgb(8, 148, 41);
 }
 
+.btnGreen:hover {
+  box-shadow: 0 0 5px rgb(8, 148, 41),
+    0 0 25px rgb(8, 148, 41),
+    0 0 50px rgb(8, 148, 41),
+    0 0 100px rgb(8, 148, 41);
+}
+
 .btnRed{
   background: rgb(148, 10, 8);
   box-shadow: 0 0 25px rgb(148, 10, 8);
+}
+
+.btnRed:hover {
+  box-shadow: 0 0 5px rgb(148, 10, 8),
+    0 0 25px rgb(148, 10, 8),
+    0 0 50px rgb(148, 10, 8),
+    0 0 100px rgb(148, 10, 8);
+}
+
+.imgShow{
+  max-height: 400px;
 }

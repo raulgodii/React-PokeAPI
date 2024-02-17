@@ -1,16 +1,44 @@
 
 import { Link, useEffect } from "react";
 import { useState } from "react";
-import { useParams } from "react-router-dom";
+import { db, auth } from "../firebase";
+import { collection, doc, setDoc, getDocs, orderBy, limit, query, where } from "firebase/firestore";
 
 function Game() {
     let [pokemonMaquetado, setPokemonMaquetado] = useState();
     let [puntuation, setPuntuation] = useState(0);
+    let [top, setTop] = useState(0);
+    let [bestPuntuation, setBestPuntuation] = useState(0);
     let solution;
 
     useEffect(() => {
         initGame();
+        loadTop();
     }, []);
+
+    function loadTop() {
+        const pokeapiDB = query(collection(db, "pokeapi"), orderBy("puntuation", "desc"), limit(5));
+        const puntuations = [];
+
+        getDocs(pokeapiDB).then((data) => {
+            data.forEach((doc) => {
+                puntuations.push(doc.data());
+            });
+            setTop(puntuations);
+            console.log(puntuations)
+
+
+            getDocs(query(collection(db, "pokeapi"), where("uid", "==", auth.currentUser.uid))).then(data => {
+                setBestPuntuation(data.docs[0].data().puntuation);
+                bestPuntuation = data.docs[0].data().puntuation;
+                console.log("BEST PUNTUATION: " +  bestPuntuation);
+            }).catch(() => {
+                setBestPuntuation(0);
+                console.log("BEST PUNTUATION errorrrrr");
+            });
+
+        });
+    };
 
     function initGame() {
 
@@ -22,7 +50,7 @@ function Game() {
                 setPokemonMaquetado(
                     <div class="col-lg-12">
                         <div class="section-heading">
-                            <img className="imgShowdown" src={solution.image} alt={solution.name} />
+                            <img className="imgShowdown imgShow" src={solution.image} alt={solution.name} />
                         </div>
                         <div class="search-input d-flex justify-content-center">
                             {pokemons.map((pokemon, index) => (
@@ -36,6 +64,12 @@ function Game() {
                     </div>
                 );
             });
+    }
+
+    function restartGame() {
+        puntuation = 0;
+        setPuntuation(0);
+        initGame();
     }
 
     async function cargarPokemons() {
@@ -79,11 +113,11 @@ function Game() {
             setPokemonMaquetado(
                 <div class="col-lg-12">
                     <div class="section-heading">
-                        <img src={solution.image} alt={solution.name} />
+                        <img className="imgShow" src={solution.image} alt={solution.name} />
                     </div>
                     <div class="search-input d-flex justify-content-center">
-                            <h5 style={{color: 'green'}}>Correct!</h5><br/><br/>
-                        </div>
+                        <h5 style={{ color: 'green' }}>Correct!</h5><br /><br />
+                    </div>
                     <div class="search-input d-flex justify-content-center">
                         <button class="shadow__btn btnGreen mx-2">
                             {solution.name}
@@ -95,14 +129,30 @@ function Game() {
                 initGame();
             }, 2000);
         } else {
+
+            if (puntuation > bestPuntuation) {
+                console.log('PUNTUATION: ' + puntuation);
+                console.log('BEST: ' + bestPuntuation);
+                const user = auth.currentUser;
+                if (user) {
+                    const uid = user.uid;
+                    const pokeapiDB = collection(db, "pokeapi");
+                    const puntuationRef = doc(pokeapiDB, uid);
+                    setDoc(puntuationRef, { uid: uid, puntuation: puntuation }).then(() => {
+                        loadTop();
+                    });
+                }
+            }
+
+
             setPokemonMaquetado(
                 <div class="col-lg-12">
                     <div class="section-heading">
-                        <img src={solution.image} alt={solution.name} />
+                        <img className="imgShow" src={solution.image} alt={solution.name} />
                     </div>
                     <div class="search-input d-flex justify-content-center">
-                            <h5 style={{color: 'red'}}>Incorrect!</h5><br/><br/>
-                        </div>
+                        <h5 style={{ color: 'red' }}>Incorrect!</h5><br /><br />
+                    </div>
                     <div class="search-input d-flex justify-content-center">
                         <button class="shadow__btn btnRed mx-2">
                             {solution.name}
@@ -110,6 +160,20 @@ function Game() {
                     </div>
                 </div>
             );
+            setTimeout(() => {
+                setPokemonMaquetado(
+                    <div class="col-lg-12">
+                        <div class="search-input d-flex justify-content-center">
+                            <h2 style={{ color: 'red' }}>GAME OVER</h2><br /><br /><br /><br />
+                        </div>
+                        <div class="search-input d-flex justify-content-center">
+                            <button onClick={restartGame} class="shadow__btn btnRed mx-2">
+                                Restart
+                            </button>
+                        </div>
+                    </div>
+                );
+            }, 2000);
         }
     }
 
@@ -138,6 +202,7 @@ function Game() {
                                             <h2>Who's that pokemon?</h2>
                                         </div>
                                         <h5>Your puntuation: {puntuation}</h5>
+                                        <h5>Your best: {bestPuntuation}</h5>
                                     </div>
                                 </div>
                             </div>
