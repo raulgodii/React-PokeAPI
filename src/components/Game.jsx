@@ -5,18 +5,112 @@ import { useParams } from "react-router-dom";
 
 function Game() {
     let [pokemonMaquetado, setPokemonMaquetado] = useState();
+    let [puntuation, setPuntuation] = useState(0);
+    let solution;
 
     useEffect(() => {
-        cargarPokemons();
+        initGame();
     }, []);
 
-    function cargarPokemons() {
-        let randomPokemonId = Math.floor(Math.random() * 1302) + 1;
-        fetch("https://pokeapi.co/api/v2/pokemon/" + randomPokemonId)
-            .then((response) => response.json())
-            .then((pokemon) => {
-                console.log(pokemon)
+    function initGame() {
+
+        cargarPokemons()
+            .then((pokemons) => {
+                // Seleccionar un pokemon aleatorio
+                solution = pokemons[Math.floor(Math.random() * pokemons.length)];
+
+                setPokemonMaquetado(
+                    <div class="col-lg-12">
+                        <div class="section-heading">
+                            <img className="imgShowdown" src={solution.image} alt={solution.name} />
+                        </div>
+                        <div class="search-input d-flex justify-content-center">
+                            {pokemons.map((pokemon, index) => (
+
+                                <button onClick={() => handleOption(pokemon.name)} key={index} class="shadow__btn mx-2">
+                                    {pokemon.name}
+                                </button>
+                            ))}
+                        </div>
+
+                    </div>
+                );
             });
+    }
+
+    async function cargarPokemons() {
+        let pokemons = []; // Array para almacenar los datos de los pokemons
+
+        // Array para almacenar todas las promesas de fetch
+        let fetchPromises = [];
+
+        // Realizar 3 peticiones
+        for (let i = 0; i < 3; i++) {
+            let randomPokemonId = Math.floor(Math.random() * 898) + 1;
+            let fetchPromise = fetch("https://pokeapi.co/api/v2/pokemon/" + randomPokemonId)
+                .then((response) => response.json())
+                .then((pokemon) => {
+                    console.log(pokemon);
+
+                    // Crear objeto con nombre e imagen del pokemon
+                    let pokemonData = {
+                        name: pokemon.name,
+                        image: pokemon.sprites.other['showdown'].front_default
+                    };
+
+                    return pokemonData;
+                });
+
+            fetchPromises.push(fetchPromise);
+        }
+
+        // Esperar a que todas las promesas se resuelvan
+        await Promise.all(fetchPromises)
+            .then((results) => {
+                pokemons = results;
+            });
+
+        return pokemons;
+    }
+
+    function handleOption(namePokemon) {
+        if (namePokemon === solution.name) {
+            setPuntuation(++puntuation);
+            setPokemonMaquetado(
+                <div class="col-lg-12">
+                    <div class="section-heading">
+                        <img src={solution.image} alt={solution.name} />
+                    </div>
+                    <div class="search-input d-flex justify-content-center">
+                            <h5 style={{color: 'green'}}>Correct!</h5><br/><br/>
+                        </div>
+                    <div class="search-input d-flex justify-content-center">
+                        <button class="shadow__btn btnGreen mx-2">
+                            {solution.name}
+                        </button>
+                    </div>
+                </div>
+            );
+            setTimeout(() => {
+                initGame();
+            }, 2000);
+        } else {
+            setPokemonMaquetado(
+                <div class="col-lg-12">
+                    <div class="section-heading">
+                        <img src={solution.image} alt={solution.name} />
+                    </div>
+                    <div class="search-input d-flex justify-content-center">
+                            <h5 style={{color: 'red'}}>Incorrect!</h5><br/><br/>
+                        </div>
+                    <div class="search-input d-flex justify-content-center">
+                        <button class="shadow__btn btnRed mx-2">
+                            {solution.name}
+                        </button>
+                    </div>
+                </div>
+            );
+        }
     }
 
     return (
@@ -43,10 +137,7 @@ function Game() {
                                             <h6>Guess the Pokemon</h6>
                                             <h2>Who's that pokemon?</h2>
                                         </div>
-                                        <p>Lorem ipsum dolor consectetur adipiscing, sed do eiusmod tempor incididunt.</p>
-                                        <div class="main-button">
-                                            <a href="shop.html">Shop Now</a>
-                                        </div>
+                                        <h5>Your puntuation: {puntuation}</h5>
                                     </div>
                                 </div>
                             </div>
@@ -54,18 +145,7 @@ function Game() {
                         <div class="col-lg-5 offset-lg-2 align-self-end">
                             <div class="subscribe">
                                 <div class="row">
-                                    <div class="col-lg-12">
-                                        <div class="section-heading">
-                                            <h6>NEWSLETTER</h6>
-                                            <h2>Get Up To $100 Off Just Buy <em>Subscribe</em> Newsletter!</h2>
-                                        </div>
-                                        <div class="search-input">
-                                            <form id="subscribe" action="#">
-                                                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Your email..."/>
-                                                    <button type="submit">Subscribe Now</button>
-                                            </form>
-                                        </div>
-                                    </div>
+                                    {pokemonMaquetado}
                                 </div>
                             </div>
                         </div>

@@ -420,3 +420,44 @@
   color: #0099ff;
   font-size: 9px;
 }
+
+.shadow__btn {
+  padding: 10px 20px;
+  border: none;
+  font-size: 17px;
+  color: #fff;
+  border-radius: 7px;
+  font-weight: 700;
+  text-transform: uppercase;
+  transition: 0.5s;
+  transition-property: box-shadow;
+  font-size: 0.8em;
+}
+
+.shadow__btn {
+  background: rgb(0, 140, 255);
+  box-shadow: 0 0 25px rgb(0, 140, 255);
+}
+
+.shadow__btn:hover {
+  box-shadow: 0 0 5px rgb(0, 140, 255),
+    0 0 25px rgb(0, 140, 255),
+    0 0 50px rgb(0, 140, 255),
+    0 0 100px rgb(0, 140, 255);
+}
+
+
+.imgShowdown {
+  filter: brightness(0);
+  height: 400px;
+}
+
+.btnGreen{
+  background: rgb(8, 148, 41);
+  box-shadow: 0 0 25px rgb(8, 148, 41);
+}
+
+.btnRed{
+  background: rgb(148, 10, 8);
+  box-shadow: 0 0 25px rgb(148, 10, 8);
+}
