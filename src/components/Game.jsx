@@ -56,7 +56,7 @@ function Game() {
                                     <div class="col-lg-2 col-md-6 col-sm-6" key={index}>
                                         <div class="item" >
                                             <div class="thumb">
-                                                <a href="product-details.html"><img src={player.photoURL ? player.photoURL : './public/images/user.jpg'} alt="" /></a>
+                                                <a href="product-details.html"><img src={player.photoURL ? player.photoURL : '../images/user.jpg'} alt="" /></a>
                                             </div>
                                             <div class="down-content">
                                                 <span class="category">{player.puntuation} points</span>
@@ -66,8 +66,6 @@ function Game() {
                                     </div>
                                 ))
                             }
-
-
                         </div>
                     </div>
                 </div>

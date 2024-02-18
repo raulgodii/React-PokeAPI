@@ -16,7 +16,7 @@ function Home() {
                         </div>
                         <div className="col-lg-4 offset-lg-2">
                             <div className="right-image">
-                                <img src="./public/images/banner-image.jpg" alt="" />
+                                <img src="../images/banner-image.jpg" alt="" />
                                 <span className="price">POKE API</span>
                                 <span className="offer">+13K</span>
                             </div>
