@@ -12,12 +12,6 @@ function Home() {
                                 <h6>Welcome to poke api</h6>
                                 <h2>The Ultimate Pokemon Experience!</h2>
                                 <p>Explore the captivating world of Pokemon with our comprehensive online platform.</p>
-                                <div className="search-input">
-                                    <form id="search" action="#">
-                                        <input type="text" placeholder="Search Pokemons" id='searchText' name="searchKeyword" />
-                                        <button role="button">Search Now</button>
-                                    </form>
-                                </div>
                             </div>
                         </div>
                         <div className="col-lg-4 offset-lg-2">
