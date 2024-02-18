@@ -9,6 +9,7 @@ function Game() {
     let [puntuation, setPuntuation] = useState(0);
     let [top, setTop] = useState(0);
     let [bestPuntuation, setBestPuntuation] = useState(0);
+    let [topPlayers, setTopPlayers] = useState();
     let solution;
 
     useEffect(() => {
@@ -25,17 +26,52 @@ function Game() {
                 puntuations.push(doc.data());
             });
             setTop(puntuations);
-            console.log(puntuations)
+            console.log(auth.currentUser)
 
 
             getDocs(query(collection(db, "pokeapi"), where("uid", "==", auth.currentUser.uid))).then(data => {
                 setBestPuntuation(data.docs[0].data().puntuation);
                 bestPuntuation = data.docs[0].data().puntuation;
-                console.log("BEST PUNTUATION: " +  bestPuntuation);
+                console.log("BEST PUNTUATION: " + bestPuntuation);
             }).catch(() => {
                 setBestPuntuation(0);
                 console.log("BEST PUNTUATION errorrrrr");
             });
+
+            setTopPlayers(
+                <div class="section most-played">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="section-heading">
+                                    <h6>TOP PLAYERS</h6>
+                                    <h2>BEST RESULTS</h2>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                            </div>
+
+                            {
+                                puntuations.map((player, index) => (
+                                    <div class="col-lg-2 col-md-6 col-sm-6" key={index}>
+                                        <div class="item" >
+                                            <div class="thumb">
+                                                <a href="product-details.html"><img src={player.photoURL} alt="" /></a>
+                                            </div>
+                                            <div class="down-content">
+                                                <span class="category">{player.puntuation} points</span>
+                                                <h4>{player.name}</h4>
+                                            </div>
+                                        </div>
+                                    </div>
+                                ))
+                            }
+
+
+                        </div>
+                    </div>
+                </div>
+            );
 
         });
     };
@@ -136,9 +172,11 @@ function Game() {
                 const user = auth.currentUser;
                 if (user) {
                     const uid = user.uid;
+                    const displayName = user.displayName;
+                    const photoURL = user.photoURL;
                     const pokeapiDB = collection(db, "pokeapi");
                     const puntuationRef = doc(pokeapiDB, uid);
-                    setDoc(puntuationRef, { uid: uid, puntuation: puntuation }).then(() => {
+                    setDoc(puntuationRef, { uid: uid, name: displayName, photoURL: photoURL, puntuation: puntuation }).then(() => {
                         loadTop();
                     });
                 }
@@ -217,6 +255,8 @@ function Game() {
                     </div>
                 </div>
             </div>
+
+            {topPlayers}
         </>
     )
 }
