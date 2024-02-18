@@ -39,15 +39,31 @@ function Detail() {
                                 <div className="col-lg-6 align-self-center">
                                     <h4 style={{ textTransform: 'uppercase' }}>{pokemon.name}</h4>
                                     <span className="price">{pokemon.id}</span>
-                                    <p>LUGX Gaming Template is based on the latest Bootstrap 5 CSS framework. This template is provided by TemplateMo and it is suitable for your gaming shop ecommerce websites. Feel free to use this for any purpose. Thank you.</p>
+
+
                                     <audio id="audioPlayer" autoPlay>
                                         <source src={pokemon.cries.latest} type="audio/mpeg" />
                                         Tu navegador no soporta la etiqueta de audio.
                                     </audio>
+
                                     <ul>
-                                        <li><span>Game ID:</span> COD MMII</li>
-                                        <li><span>Genre:</span> <a href="#">Action</a>, <a href="#">Team</a>, <a href="#">Single</a></li>
-                                        <li><span>Multi-tags:</span> <a href="#">War</a>, <a href="#">Battle</a>, <a href="#">Royal</a></li>
+
+                                        {pokemon.types.map((type) => (
+                                            <button class="shadow__btn mx-2">{type.type.name}</button>
+                                        ))}
+
+                                        <li><span>Height: </span>{pokemon.height}</li>
+                                        <li><span>Weight: </span>{pokemon.weight}</li>
+                                        <li><span>Moves: </span>{
+                                            pokemon.moves.map((move) => (
+                                                move.move.name + ', '
+                                            ))
+                                        }</li>
+                                        {
+                                            pokemon.abilities.map((ability, index) => (
+                                                <li key={index}><span>Ability {index + 1}:</span> {ability.ability.name}</li>
+                                            ))
+                                        }
                                     </ul>
                                 </div>
                                 <div className="col-lg-12">
