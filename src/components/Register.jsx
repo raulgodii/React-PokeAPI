@@ -1,10 +1,11 @@
 import { Link, useNavigate } from "react-router-dom"
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, updateProfile} from "firebase/auth";
 import { auth } from "../firebase";
 import { useState } from "react";
 
 function Register() {
 
+    const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [pass1, setPassword1] = useState('');
     const [pass2, setPassword2] = useState('');
@@ -13,7 +14,7 @@ function Register() {
 
     function register() {
         // Validate empty fields
-        if (!email || !pass1 || !pass2) {
+        if (!email || !pass1 || !pass2 || !name) {
             setError("All fields are mandatory");
             return;
         }
@@ -32,11 +33,13 @@ function Register() {
         }
         createUserWithEmailAndPassword(auth, email, pass1)
             .then((userCredential) => {
-                // Signed up 
+
                 const user = userCredential.user;
-                console.log("Usuario registrado: " + user)
-                navigate("/");
-                // ...
+                updateProfile(user, {
+                    displayName: name
+                }).then(() => {
+                    navigate("/");
+                })
             })
             .catch((error) => {
                 switch (error.code) {
@@ -104,6 +107,11 @@ function Register() {
                                                 <div class="col-lg-12">
                                                     <fieldset>
                                                         <h2>Please register</h2><br /><br />
+                                                        <input type="text" name="name" id="name" value={name} onChange={(e) => setName(e.target.value)} placeholder="Your Name..." required="" />
+                                                    </fieldset>
+                                                </div>
+                                                <div class="col-lg-12">
+                                                    <fieldset>
                                                         <input type="email" name="email" id="email" value={email} onChange={(e) => setEmail(e.target.value)} pattern="[^ @]*@[^ @]*" placeholder="Your E-mail..." required="" />
                                                     </fieldset>
                                                 </div>
